@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+echo "Detect script starting"
+
 # 1. GET ARGS
 plan_path=$2
 
@@ -13,3 +15,6 @@ cat >> "${plan_path}" <<EOL
 [[provides]]
 name = "dyno-metrics"
 EOL
+
+echo "Detect script complete"
+exit 0
