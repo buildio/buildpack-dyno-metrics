@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# Fail fast
+set -e
+set -o pipefail
+
+# Debug
+set -x
+
+# Parse and derive params
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+BUILDPACK_DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
+
+echo "     buildpack dir: ${BUILDPACK_DIR}"
+
+# Load formatting tools
+source "$BUILDPACK_DIR/bin/common.sh"
+
+BUILD_DIR=${layers_dir}
+echo "     build dir: ${BUILD_DIR}"
+
+# Install the runner
+topic "Installing Metrics runner"
+mkdir -p "$BUILD_DIR/.profile.d"
+cp "$BUILDPACK_DIR/extra/agent.sh" "$BUILD_DIR/.profile.d/"
+chmod +x "$BUILD_DIR/.profile.d/agent.sh"
+
+echo "---> Done"
