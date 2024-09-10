@@ -19,7 +19,6 @@ echo "     buildpack dir: ${BUILDPACK_DIR}"
 # Load formatting tools
 source "$BUILDPACK_DIR/bin/common.sh"
 
-BUILD_DIR=${layers_dir}
 echo "     build dir: ${BUILD_DIR}"
 
 # Install the runner
