@@ -7,16 +7,16 @@
 #include <time.h>
 
 void log_system_stats(const char *stats_format, ...) {
-    const char *dyno_formation = getenv("DYNO_FORMATION");
-    const char *dyno_uuid = getenv("DYNO_UUID");
+    const char *dyno_process_type = getenv("BUILD_DYNO_PROCESS_TYPE");
+    const char *dyno_id = getenv("BUILD_DYNO_ID");
 
-    if (!dyno_formation) dyno_formation = "unknown_formation";
-    if (!dyno_uuid) dyno_uuid = "unknown_dyno";
+    if (!dyno_process_type) dyno_process_type = "unknown_process_type";
+    if (!dyno_id) dyno_id = "unknown_dyno";
 
     va_list args;
     va_start(args, stats_format);
 
-    printf("sample#source=%s sample#dyno=%s ", dyno_formation, dyno_uuid);
+    printf("sample#source=%s sample#dyno=%s ", dyno_process_type, dyno_id);
     vprintf(stats_format, args); // Print the formatted string with the passed arguments
     printf("\n");
 
