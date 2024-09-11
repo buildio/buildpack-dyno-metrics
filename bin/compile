@@ -27,4 +27,9 @@ mkdir -p "$BUILD_DIR/.profile.d"
 cp "$BUILDPACK_DIR/extra/agent.sh" "$BUILD_DIR/.profile.d/"
 chmod +x "$BUILD_DIR/.profile.d/agent.sh"
 
+# Install the agent
+topic "Building Metrics agent"
+mkdir -p "$BUILD_DIR/bin"
+gcc -o "$BUILD_DIR/bin/agent" -lm "$BUILDPACK_DIR/extra/stats.c"
+
 echo "---> Done"
