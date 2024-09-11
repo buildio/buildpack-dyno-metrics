@@ -34,6 +34,7 @@ double load_avg_1m = 0.0;
 double load_avg_5m = 0.0;
 double load_avg_15m = 0.0;
 time_t last_sample_time = 0;
+pid_t agent_pid;  // Store the agent's PID
 
 // Function to count the number of runnable processes in the container
 int count_runnable_tasks() {
@@ -45,10 +46,14 @@ int count_runnable_tasks() {
 
     int runnable_tasks = 0;
     char line[256];
+    pid_t pid;
 
-    // Count the number of lines in the cgroup.procs file (each line represents a task/process)
+    // Read each PID in the cgroup.procs file
     while (fgets(line, sizeof(line), file)) {
-        runnable_tasks++;
+        sscanf(line, "%d", &pid);
+        if (pid != agent_pid) {  // Exclude the agent's PID
+            runnable_tasks++;
+        }
     }
 
     fclose(file);
