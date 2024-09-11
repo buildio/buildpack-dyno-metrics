@@ -30,6 +30,6 @@ chmod +x "$BUILD_DIR/.profile.d/agent.sh"
 # Install the agent
 topic "Building Metrics agent"
 mkdir -p "$BUILD_DIR/bin"
-gcc -o "$BUILD_DIR/bin/agent" -lm "$BUILDPACK_DIR/extra/stats.c"
+gcc -o "$BUILD_DIR/bin/agent" "$BUILDPACK_DIR/extra/stats.c" -lm
 
 echo "---> Done"
