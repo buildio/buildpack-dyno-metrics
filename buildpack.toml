@@ -5,7 +5,7 @@ api = "0.4"
 # Buildpack ID and metadata
 [buildpack]
 id = "buildio/buildpack-dyno-metrics"
-version = "0.0.1"
+version = "0.0.2"
 name = "Dyno Metrics Buildpack"
 homepage = "https://github.com/buildio/buildpack-dyno-metrics/tree/main"
 
