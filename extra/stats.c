@@ -6,6 +6,19 @@
 #include <math.h>
 #include <time.h>
 
+
+// Function to check if DYNO or BUILD_DYNO_PROCESS_TYPE starts with "run"
+void check_environment_and_exit() {
+    char *dyno = getenv("DYNO"); // e.g. run.1312 -- Heroku-defined
+    char *build_dyno_process_type = getenv("BUILD_DYNO_PROCESS_TYPE"); // e.g. run -- Build.io-defined
+
+    if ((dyno && strncmp(dyno, "run", 3) == 0) || 
+        (build_dyno_process_type && strncmp(build_dyno_process_type, "run", 3) == 0)) {
+        //printf("Exiting because DYNO or BUILD_DYNO_PROCESS_TYPE starts with 'run'\n");
+        exit(EXIT_SUCCESS);
+    }
+}
+
 void log_system_stats(const char *stats_format, ...) {
     const char *dyno_process_type = getenv("BUILD_DYNO_PROCESS_TYPE");
     const char *dyno_id = getenv("BUILD_DYNO_ID");
@@ -271,6 +284,9 @@ void sample_memory_usage() {
 }
 
 int main() {
+    // Call the function to check the environment and exit if needed
+    check_environment_and_exit();
+
     while (1) {
         sample_load_average();  // Report CPU load averages
         sample_cpu_usage(SAMPLE_INTERVAL);  // Report CPU load averages
